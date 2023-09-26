@@ -9,5 +9,4 @@ function CAMARA() {
       </div>
     );
   }
-  
   export default CAMARA;

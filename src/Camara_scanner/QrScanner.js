@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import QrReader from 'react-qr-scanner';
 
 function QRScanner() {
-  const [result, setResult] = useState('');
+  //const [result, setResult] = useState('');//
   const [facingMode, setFacingMode] = useState('environment'); // Por defecto, usa la cámara trasera
   const handleScan = (data) => {
     if (data) {

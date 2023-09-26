@@ -28,7 +28,9 @@ function QRScanner() {
         onScan={handleScan}
         style={{ width: '100%' }}
       />
-      <p>Resultado: <a href={result} target='_blank'>{result}</a></p>
+      {/* <p>Resultado: <a href={result} target='_blank'>{result}</a></p> */}
+      <p>Resultado: {result}</p>
+
     </div>
   );
 }

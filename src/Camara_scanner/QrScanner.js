@@ -1,37 +1,34 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import QrReader from 'react-qr-scanner';
 
-function Camera() {
-  const videoRef = useRef(null);
-  const [currentCamera, setCurrentCamera] = useState('environment'); // Inicialmente, usa la cámara trasera
+function QRScanner() {
+  const [result, setResult] = useState('');
+  const [facingMode, setFacingMode] = useState('environment'); // Por defecto, usa la cámara trasera
 
-  const switchCamera = () => {
-    setCurrentCamera(currentCamera === 'environment' ? 'user' : 'environment');
+  const handleScan = (data) => {
+    if (data) {
+      setResult(data);
+    }
   };
 
-  useEffect(() => {
-    const startCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: currentCamera, // Cambiar entre 'environment' y 'user' aquí
-          },
-        });
-        videoRef.current.srcObject = stream;
-      } catch (error) {
-        console.error('Error al acceder a la cámara:', error);
-      }
-    };
-
-    startCamera();
-  }, [currentCamera]);
+  const toggleCamera = () => {
+    // Cambia entre la cámara trasera y la cámara frontal
+    setFacingMode(facingMode === 'user' ? 'environment' : 'user');
+  };
 
   return (
     <div>
-      <h2>Cámara en tiempo real</h2>
-      <video ref={videoRef} autoPlay playsInline />
-      <button onClick={switchCamera}>Cambiar Cámara</button>
+      <button onClick={toggleCamera}>Cambiar Cámara</button>
+      <QrReader
+        delay={300}
+        onError={(error) => console.log(error)}
+        onScan={handleScan}
+        style={{ width: '100%' }}
+        facingMode={facingMode} // Establece la cámara
+      />
+      <p>Resultado: {result}</p>
     </div>
   );
 }
 
-export default Camera;
+export default QRScanner;
